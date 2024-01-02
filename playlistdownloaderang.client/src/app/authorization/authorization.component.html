@@ -1,0 +1,71 @@
+
+<ng-template [ngIf]="!authorizationService.hasToken()" id="login">
+  <h1>Welcome to the OAuth2 PKCE Example</h1>
+  <!--<button id="login-button" (click)="loginWithSpotifyClick()"> Log in with Spotify </button>-->
+</ng-template>
+
+<ng-template
+      [ngIf]="authorizationService.hasToken() && this.authorizationService.isValidToken()"
+      id="logged-in-template">
+  <h1>Logged in as {{userData.display_name}}</h1>
+  <img width="150" [attr.src]="userData.images[0].url" [attr.alt]="userData.display_name" />
+  <div class="table-container">
+    <table>
+      <tr>
+        <td>Display name</td>
+        <td>{{userData.display_name}}</td>
+      </tr>
+      <tr>
+        <td>Id</td>
+        <td>{{userData.id}}</td>
+      </tr>
+      <tr>
+        <td>Email</td>
+        <td>{{userData.email}}</td>
+      </tr>
+      <tr>
+        <td>Spotify URI</td>
+        <td>
+          <a [attr.href]="userData.external_urls.spotify">{{userData.external_urls.spotify}}</a>
+        </td>
+      </tr>
+      <tr>
+        <td>Link </td>
+        <td>
+          <a [attr.href]="userData.href"></a>
+        </td>
+      </tr>
+      <!--<tr>
+        <td>Profile Image</td>
+        <td>
+          <a [attr.href]="userData.images[0].url">{{userData.images[0].url}}</a>
+        </td>
+      </tr>-->
+      <tr>
+        <td>Country</td>
+        <td>{{userData.country}}</td>
+      </tr>
+    </table>
+  </div>
+  <!--<button mat-fab extended color="primary" id="refresh-token-button" (click)="refreshTokenClick()">Refresh Token</button>
+  <button mat-fab extended color="primary" id="logout-button" (click)="logoutClick()">Log out</button>-->
+</ng-template>
+<ng-template [ngIf]="authorizationService.hasToken()" id="oauth-template">
+  <h2>oAuth info</h2>
+  <div class="table-container">
+    <table>
+      <tr>
+        <td>Access token</td>
+        <td>{{authorizationService.currentToken.access_token}}</td>
+      </tr>
+      <tr>
+        <td>Refresh token</td>
+        <td>{{authorizationService.currentToken.refresh_token}}</td>
+      </tr>
+      <tr>
+        <td>Expiration at</td>
+        <td>{{authorizationService.currentToken.expires}}</td>
+      </tr>
+    </table>
+  </div>
+</ng-template>

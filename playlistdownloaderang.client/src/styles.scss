@@ -1,0 +1,50 @@
+// SCSS Variables
+$layout_bp_mobile: 360px;
+$layout_bp_tablet: 600px;
+$layout_bp_desktop: 1000px;
+
+$dark-gray: #121212;
+$light-gray: #b3b3b3;
+
+// SCSS Mixins
+@mixin tablet {
+  @media only screen and (min-width: $layout_bp_tablet) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media only screen and (min-width: $layout_bp_desktop) {
+    @content;
+  }
+}
+
+// SCSS Styles
+* {
+  margin: 0;
+}
+html,
+body {
+  margin: 0 auto;
+  padding: 0;
+  /*width: 100%;
+  height: 100%;*/
+  background-color: black;
+  color: white;
+  font-size: 14px;
+  font-family: Circular,sans-serif,"Helvetica Neue",Helvetica,Arial,"Hiragino Kaku Gothic ProN",Meiryo,"MS GothicHelvetica";
+}
+
+.nav-container {
+  background-color: $dark-gray;
+  color: white;
+  /*overflow: auto;*/
+  /*display: block;*/
+
+  @include tablet {
+    margin: 10px 0;
+    padding: 16px;
+    border-radius: 8px;
+    /*display: block;*/
+  }
+}

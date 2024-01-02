@@ -1,0 +1,40 @@
+// SCSS Variables
+$layout_bp_mobile: 360px;
+$layout_bp_tablet: 600px;
+$layout_bp_desktop: 1000px;
+
+$dark-gray: #121212;
+$light-gray: #b3b3b3;
+$black: black;
+
+// SCSS Mixins
+@mixin tablet {
+  @media only screen and (min-width: $layout_bp_tablet) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media only screen and (min-width: $layout_bp_desktop) {
+    @content;
+  }
+}
+
+#library-nav {
+  
+}
+
+.library-icon {
+  display: inline-block;
+  height: 35px;
+  vertical-align: middle;
+}
+
+@include tablet {
+  #library span {
+      font-size: 16px;
+      font-weight: bold;
+      margin-left: 12px;
+      display: inline-block;    
+  }
+}

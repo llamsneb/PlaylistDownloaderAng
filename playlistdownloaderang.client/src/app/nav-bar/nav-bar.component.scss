@@ -1,0 +1,173 @@
+// SCSS Variables
+$layout_bp_mobile: 360px;
+$layout_bp_tablet: 600px;
+$layout_bp_desktop: 1000px;
+
+$dark-gray: #121212;
+$light-gray: #b3b3b3;
+$black: black;
+
+// SCSS Mixins
+@mixin tablet {
+  @media only screen and (min-width: $layout_bp_tablet) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media only screen and (min-width: $layout_bp_desktop) {
+    @content;
+  }
+}
+
+// SCSS Styles
+button {
+  background-color: white;
+  color: $black;
+  border: none;
+  padding: 16px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 30px;
+}
+
+.logo {
+  height: 25px;
+  padding-top: 5px;
+  padding-left: 5px;
+}
+
+#nav {
+  /*display:flex;*/
+  width: 100%;
+  height: auto;
+  overflow: auto;
+  font-size: 22px;
+  /*position: fixed;*/
+  background-color: $black;
+  
+
+  a.spotify-link {
+    float: left;
+    display: block;
+    padding: 14px;
+  }
+
+  .home-icon {
+    display: none;
+  }
+
+  .icon {
+    float: right;
+    display: block;
+    color: white;
+    padding: 16px;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .closebtn, .overlay-content {
+    display: none;
+  }
+
+  @include tablet {    
+    width: auto;
+    position: relative;
+    overflow: auto;
+    background-color: $dark-gray;
+
+    .overlay-content {
+      display: block;
+    }
+
+    a#home, a.spotify-link {
+      display: block;
+      float: none;
+      padding: 4px 0px;
+    }
+
+    button {
+      display: block;
+      float: none;
+      margin: 6px;
+    }
+
+    #home {
+      color: white;
+      text-decoration: none;
+    }
+
+    .home-icon {
+      display: inline-block;
+      height: 35px;
+      vertical-align: middle;
+    }
+
+    #home span {
+      font-size: 16px;
+      font-weight: bold;
+      margin-left: 12px;
+    }
+
+    .icon {
+      display: none;
+    }
+  }
+}
+
+#nav.responsive {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: rgb(0,0,0);
+  /*background-color: rgba(0,0,0, 0.9);*/
+  overflow-x: hidden;
+  transition: 0.5s;
+
+  a.spotify-link, a.icon {
+    display: none;
+  }
+
+  .closebtn {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px;
+    display: block;
+    color: #818181;
+    text-decoration: none;
+  }
+
+  .closebtn:hover, .closebtn:focus {
+    color: #f1f1f1;
+  }
+
+  .overlay-content {
+    position: relative;
+    top: 25%;
+    width: 100%;
+    text-align: left;
+    margin-top: 30px;
+    display: block;
+
+    a, button {
+      padding: 8px;
+      text-decoration: none;
+      font-size: 36px;
+      color: #818181;
+      display: block;
+      transition: 0.3s;
+      float: none;
+      background-color: transparent;
+    }
+
+    a:hover, a:focus, button:hover, button:focus {
+      color: #f1f1f1;
+    }
+  }  
+}

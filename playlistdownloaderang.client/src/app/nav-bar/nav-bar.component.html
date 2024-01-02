@@ -1,0 +1,29 @@
+
+
+<!--<h1>NAV BAR TEST</h1>-->
+<div class="nav-container" id="nav" [ngClass]="responsive ? 'responsive' : ''">
+  <a href="javascript:void(0)" class="closebtn" (click)="responsive=false">&times;</a>
+  <a class="spotify-link" routerLink=""><img class="logo" src="../assets/Spotify_Logo_RGB_White.png"></a>
+  <a href="javascript:void(0);" class="icon" (click)="responsive=true">&#9776;</a>
+  <div class="overlay-content">
+    <a class="active" id="home" routerLink="" href="#home"><img class="home-icon" src="../assets/home.png" /><span>Home</span></a>
+    <ng-template [ngIf]="!authorizationService.hasToken()" id="logged-in-template">
+      <button id="login-button" (click)="loginWithSpotifyClick()"> Log in with Spotify </button>
+    </ng-template>
+    <ng-template [ngIf]="authorizationService.hasToken()" id="logged-in-template">
+      <button id="refresh-token-button" (click)="refreshTokenClick()">Refresh Token</button>
+      <button id="logout-button" (click)="logoutClick()">Log out</button>
+    </ng-template>
+  </div>
+</div>  
+
+  <!--<mat-sidenav-container class="mat-app-background">
+    <mat-sidenav mode="side" opened>
+      Sidenav content
+      <button  mat-fab extended color="primary" id="login-button"> Log in with Spotify </button>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      Main content
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>-->
