@@ -2,6 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AuthorizationService } from '../app/authorization.service';
 import { AuthToken } from './models/auth-token.model';
+import { RouterOutlet } from '@angular/router';
+import { LibraryComponent } from './library/library.component';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
 
 //interface WeatherForecast {
 //  date: string;
@@ -11,9 +14,11 @@ import { AuthToken } from './models/auth-token.model';
 //}
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.scss',
+    standalone: true,
+    imports: [NavBarComponent, LibraryComponent, RouterOutlet]
 })
 export class AppComponent implements OnInit {
   //public forecasts: WeatherForecast[] = [];

@@ -2,11 +2,14 @@ import { Component, OnInit } from '@angular/core';
 
 import { AuthorizationService } from '../authorization.service';
 import { ProfileService } from '../profile.service';
+import { NgIf, AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-authorization',
-  templateUrl: './authorization.component.html',
-  styleUrl: './authorization.component.scss'
+    selector: 'app-authorization',
+    templateUrl: './authorization.component.html',
+    styleUrl: './authorization.component.scss',
+    standalone: true,
+    imports: [NgIf, AsyncPipe]
 })
 
 export class AuthorizationComponent implements OnInit {

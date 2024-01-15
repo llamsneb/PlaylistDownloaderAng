@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthorizationService } from '../authorization.service';
+import { RouterLink } from '@angular/router';
+import { NgClass, NgIf, AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-nav-bar',
-  templateUrl: './nav-bar.component.html',
-  styleUrl: './nav-bar.component.scss'
+    selector: 'app-nav-bar',
+    templateUrl: './nav-bar.component.html',
+    styleUrl: './nav-bar.component.scss',
+    standalone: true,
+    imports: [NgClass, RouterLink, NgIf, AsyncPipe]
 })
 export class NavBarComponent implements OnInit {
   responsive: boolean = false; 

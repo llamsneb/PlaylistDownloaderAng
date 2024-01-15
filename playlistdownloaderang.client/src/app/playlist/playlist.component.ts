@@ -4,9 +4,10 @@ import { PlaylistService } from '../playlist.service';
 import { Playlist } from '../models/playlist.model';
 //import { ActivatedRoute } from 
 @Component({
-  selector: 'app-playlist',
-  templateUrl: './playlist.component.html',
-  styleUrl: './playlist.component.scss'
+    selector: 'app-playlist',
+    templateUrl: './playlist.component.html',
+    styleUrl: './playlist.component.scss',
+    standalone: true
 })
 export class PlaylistComponent {
   playlist: Playlist|null = null;

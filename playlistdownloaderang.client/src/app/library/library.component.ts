@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthorizationService } from '../authorization.service';
 import { LibraryService } from '../library.service';
+import { RouterLinkActive, RouterLink } from '@angular/router';
+import { NgFor } from '@angular/common';
 
 @Component({
-  selector: 'app-library',
-  templateUrl: './library.component.html',
-  styleUrl: './library.component.scss'
+    selector: 'app-library',
+    templateUrl: './library.component.html',
+    styleUrl: './library.component.scss',
+    standalone: true,
+    imports: [NgFor, RouterLinkActive, RouterLink]
 })
 export class LibraryComponent {
   playlists: any = {};
