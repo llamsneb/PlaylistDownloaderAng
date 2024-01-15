@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+
 import { AuthorizationService } from '../authorization.service';
+import { ProfileService } from '../profile.service';
 
 @Component({
   selector: 'app-authorization',
@@ -11,26 +13,22 @@ export class AuthorizationComponent implements OnInit {
   userData: any = {};
 
   constructor(
-    public authorizationService: AuthorizationService
+    public authorizationService: AuthorizationService,
+    public profileService: ProfileService
   ) { }
 
-  async ngOnInit() {
-    //If we have a token, we're logged in, so fetch user data    
-    if (this.authorizationService.hasToken()) {
-      if (!this.authorizationService.isValidToken()) {
-        this.authorizationService.refreshToken();
+  ngOnInit() {   
+    //If we have a token, we're logged in, so fetch user data
+    this.authorizationService.isLoggedIn.subscribe(val => {
+      if (val) {
+        this.getUserData()
       }
-
-      this.userData = await this.getUserData();
-    }       
-  }
-
-  async getUserData() {
-    const response = await fetch("https://api.spotify.com/v1/me", {
-      method: 'GET',
-      headers: { 'Authorization': 'Bearer ' + this.authorizationService.currentToken.access_token },
     });
+  }  
 
-    return await response.json();
-  }    
+  getUserData(): void {
+    this.profileService.getUserData()
+      .subscribe(userData =>
+        this.userData = userData);
+  } 
 }

@@ -21,7 +21,13 @@ $black: black;
 }
 
 #library-nav {
-  
+  font-size: 16px;
+  font-weight: bold;
+  /*margin-left: 12px;*/
+}
+
+.title-container {
+  padding: 5px 0;
 }
 
 .library-icon {
@@ -29,6 +35,43 @@ $black: black;
   height: 35px;
   vertical-align: middle;
 }
+
+.playlists-nav{
+    display: flex;
+    padding: 5px;
+}
+
+/*.playlists-nav div {
+  display: inline-block;
+}*/
+
+.playlists-nav img {
+  margin-right: 12px;
+}
+
+.playlists-nav span {
+  vertical-align: top;
+  padding: 3px;
+}
+
+#library-nav div ul li {
+  border-radius: 5px;
+}
+
+#library-nav div ul li:hover {
+  background-color: #1a1a1a;
+}
+
+#library-nav div ul li.active{
+    background-color: #232323;
+}
+
+#library-nav div ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+
 
 @include tablet {
   #library span {

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AuthorizationService } from '../app/authorization.service';
+import { AuthToken } from './models/auth-token.model';
 
 //interface WeatherForecast {
 //  date: string;
@@ -22,7 +23,7 @@ export class AppComponent implements OnInit {
     public authorizationService: AuthorizationService
   ) { }
 
-  async ngOnInit() {
+  ngOnInit() {
     /**
     * This is an example of a basic node.js script that performs
     * the Authorization Code with PKCE oAuth2 flow to authenticate 
@@ -38,15 +39,17 @@ export class AppComponent implements OnInit {
 
     // If we find a code, we're in a callback, do a token exchange
     if (code) {
-      const token = await this.authorizationService.getToken(code);
-      this.authorizationService.currentToken.save(token);
+      this.authorizationService.getToken(code).subscribe(token => { 
+        this.authorizationService.currentToken.save(token);
+        this.authorizationService.isLoggedIn.next(!!this.authorizationService.currentToken.access_token)      
 
-      // Remove code from URL so we can refresh correctly.
-      const url = new URL(window.location.href);
-      url.searchParams.delete("code");
+        // Remove code from URL so we can refresh correctly.
+        const url = new URL(window.location.href);
+        url.searchParams.delete("code");
 
-      const updatedUrl = url.search ? url.href : url.href.replace('?', '');
-      window.history.replaceState({}, document.title, updatedUrl);
+        const updatedUrl = url.search ? url.href : url.href.replace('?', '');
+        window.history.replaceState({}, document.title, updatedUrl);
+      });
     }
 
     //console.log('test');

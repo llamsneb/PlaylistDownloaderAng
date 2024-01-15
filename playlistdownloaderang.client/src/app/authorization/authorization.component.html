@@ -1,11 +1,11 @@
 
-<ng-template [ngIf]="!authorizationService.hasToken()" id="login">
+<ng-template [ngIf]="!(authorizationService.isLoggedIn | async)" id="login">
   <h1>Welcome to the OAuth2 PKCE Example</h1>
   <!--<button id="login-button" (click)="loginWithSpotifyClick()"> Log in with Spotify </button>-->
 </ng-template>
 
 <ng-template
-      [ngIf]="authorizationService.hasToken() && this.authorizationService.isValidToken()"
+      [ngIf]="(authorizationService.isLoggedIn | async) && this.authorizationService.isValidToken()"
       id="logged-in-template">
   <h1>Logged in as {{userData.display_name}}</h1>
   <img width="150" [attr.src]="userData.images[0].url" [attr.alt]="userData.display_name" />
@@ -50,7 +50,7 @@
   <!--<button mat-fab extended color="primary" id="refresh-token-button" (click)="refreshTokenClick()">Refresh Token</button>
   <button mat-fab extended color="primary" id="logout-button" (click)="logoutClick()">Log out</button>-->
 </ng-template>
-<ng-template [ngIf]="authorizationService.hasToken()" id="oauth-template">
+<ng-template [ngIf]="authorizationService.isLoggedIn | async" id="oauth-template">
   <h2>oAuth info</h2>
   <div class="table-container">
     <table>

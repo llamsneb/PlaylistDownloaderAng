@@ -38,15 +38,4 @@ export class NavBarComponent implements OnInit {
   //  window.location.reload();
   }
 
-  async logoutClick() {
-    localStorage.clear();
-    window.location.href = this.authorizationService.redirectUrl;
-  }
-
-  async refreshTokenClick() {
-    await this.authorizationService.refreshToken();
-    //const token = await this.authorizationService.refreshToken();
-    //this.authorizationService.currentToken.save(token);
-  //  window.location.reload();
-  }
 }

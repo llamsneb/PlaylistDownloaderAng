@@ -1,4 +1,10 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpRequest, HttpInterceptorFn, HttpEvent, HttpHandler, HttpHandlerFn } from '@angular/common/http';
+import { Observable, of, from, throwError } from 'rxjs';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
+
+import { BehaviorSubject } from 'rxjs';
+import { AuthToken } from './models/auth-token.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +17,14 @@ export class AuthorizationService {
   tokenEndpoint: string = "https://accounts.spotify.com/api/token";
   scope: string = 'user-read-private user-read-email';
 
+
+
   // Data structure that manages the current active token, caching it in localStorage
-  currentToken: any = {
-    get access_token() { return localStorage.getItem('access_token') || null; },
-    get refresh_token() { return localStorage.getItem('refresh_token') || null; },
-    get expires_in() { return localStorage.getItem('expires_in') || null },
-    get expires() { return localStorage.getItem('expires') || null },
+  currentToken = {
+    get access_token() { return localStorage.getItem('access_token') },
+    get refresh_token() { return localStorage.getItem('refresh_token') },
+    get expires_in() { return localStorage.getItem('expires_in') },
+    get expires() { return localStorage.getItem('expires') },
 
     save: function (response: any) {
       const { access_token, refresh_token, expires_in } = response;
@@ -30,7 +38,19 @@ export class AuthorizationService {
     }
   };
 
-  constructor() { }
+  //private httpOptions = {
+  //  headers: new HttpHeaders(
+  //    {
+  //      //'Authorization': 'Bearer ' + this.currentToken.access_token,
+  //      'Content-Type': 'application/x-www-form-urlencoded'
+  //    }
+  //  )
+  //};
+
+  isLoggedIn = new BehaviorSubject<boolean>(!!this.currentToken.access_token);
+  hasValidToken = new BehaviorSubject<boolean>(!!this.currentToken.access_token);
+  isRefreshing = false;
+  constructor(private http: HttpClient) { }
 
   async redirectToSpotifyAuthorize() {
     const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -62,55 +82,115 @@ export class AuthorizationService {
     window.location.href = authUrl.toString(); // Redirect the user to the authorization server for login
   }
 
-  hasToken() {
-    return this.currentToken.access_token != null && this.currentToken.access_token != 'undefined'
-      ? true
-      : false;    
-  }
+  //hasToken() {
+  //  return this.currentToken.access_token //&& this.currentToken.access_token != 'undefined'
+  //    ? true
+  //    : false;    
+  //}
 
   isValidToken() {
     const now = new Date();
-    const expireTime = new Date(this.currentToken.expires);
+    const expireTime = new Date(this.currentToken.expires!);
     return now < expireTime ? true : false;
-    
+
   }
 
-  // Soptify API Calls
-  async getToken(code: string) {
+  getToken(code: string): Observable<AuthToken> {
     const code_verifier = localStorage.getItem('code_verifier') ?? '';
-
-    const response = await fetch(this.tokenEndpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: new URLSearchParams({
-        client_id: this.clientId,
-        grant_type: 'authorization_code',
-        code: code,
-        redirect_uri: this.redirectUrl,
-        code_verifier: code_verifier,
-      }),
+    const params = new URLSearchParams({
+      client_id: this.clientId,
+      grant_type: 'authorization_code',
+      code: code,
+      redirect_uri: this.redirectUrl,
+      code_verifier: code_verifier
     });
 
-    return await response.json();
+    return this.http.post<AuthToken>(this.tokenEndpoint, params)
+      .pipe(
+        //tap(_ => this.log('fetched profile')),
+        catchError(this.handleError<AuthToken>('getToken'))
+      );
   }
 
-  async refreshToken() {
-    const response = await fetch(this.tokenEndpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: new URLSearchParams({
-        client_id: this.clientId,
-        grant_type: 'refresh_token',
-        refresh_token: this.currentToken.refresh_token
-      }),
+  refreshToken() {
+    this.getRefreshToken().subscribe(token => {
+      this.currentToken.save(token);
+      this.isLoggedIn.next(!!this.currentToken.access_token);
+    });
+  }
+
+  autoRefreshToken(req: HttpRequest<any>, next: HttpHandlerFn) {
+    if (!this.isRefreshing) {
+      this.isRefreshing = true;
+
+      return this.getRefreshToken().pipe(
+        switchMap(token => {
+          this.currentToken.save(token);
+          this.isRefreshing = false;
+          //Add new token header here as request will not hit interceptor again
+          let modifiedReq = req.clone({
+            headers: req.headers.set('Authorization', `Bearer ` + this.currentToken.access_token),
+          });
+          return next(modifiedReq);
+        }),
+        catchError((error) => {
+          this.isRefreshing = false;
+          //Refresh Token Issue.
+          this.logout();          
+          return throwError(() => error);
+        })
+      );
+    }
+    else {
+      return next(req);
+    }
+  }
+
+  getRefreshToken(): Observable<AuthToken> {
+    const params = new URLSearchParams({
+      client_id: this.clientId,
+      grant_type: 'refresh_token',
+      refresh_token: this.currentToken.refresh_token!
     });
 
-    const token = await response.json();
-    this.currentToken.save(token);
+    return this.http.post<AuthToken>(this.tokenEndpoint, params)
+      .pipe(
+        //tap(_ => this.log('fetched profile')),
+        catchError((error) => {
+          //Refresh Token Issue.
+          //if (error.status == 401) {
+            //this.logout();
+          //}
+          return throwError(() => error);
+        })       
+      );
+  }  
+
+  logout() {
+    localStorage.clear();
+    this.isLoggedIn.next(!!this.currentToken.access_token);
+    window.location.href = this.redirectUrl;
+  }  
+
+  /**
+* Handle Http operation that failed.
+* Let the app continue.
+*
+* @param operation - name of the operation that failed
+* @param result - optional value to return as the observable result
+*/
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+
+      // TODO: better job of transforming error for user consumption
+      //this.log(`${operation} failed: ${error.message}`);
+
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
+    };
   }
 
 }

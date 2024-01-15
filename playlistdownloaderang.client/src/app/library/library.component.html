@@ -1,3 +1,15 @@
 <div id="library-nav" class="nav-container">
-  <a id="library"><img class="library-icon" src="../assets/library.png"><span>Your Library</span></a>
+  <div class="title-container">
+    <a id="library"><img class="library-icon" src="../assets/library.png"><span>Your Library</span></a>
+  </div>
+  <div>
+    <ul>
+      <li *ngFor="let playlist of playlists.items" routerLinkActive="active">
+        <div class="playlists-nav" routerLink="/playlist/{{playlist.id}}">
+          <div><img src="{{playlist.images[2].url}}"/></div>
+          <div><span>{{ playlist.name }}</span></div>
+        </div>
+      </li>
+    </ul>
+  </div>
 </div>

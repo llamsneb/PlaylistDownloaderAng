@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthorizationService } from '../authorization.service';
+import { LibraryService } from '../library.service';
 
 @Component({
   selector: 'app-library',
@@ -7,29 +8,25 @@ import { AuthorizationService } from '../authorization.service';
   styleUrl: './library.component.scss'
 })
 export class LibraryComponent {
-  playLists: any = {};
+  playlists: any = {};
 
   constructor(
-    public authorizationService: AuthorizationService
+    public authorizationService: AuthorizationService,
+    public libraryService: LibraryService
   ) { }
 
-  async ngOnInit() {
-    //If we have a token, we're logged in, so fetch user data    
-    if (this.authorizationService.currentToken.access_token != null) {
-      if (!this.authorizationService.isValidToken()) {
-        this.authorizationService.refreshToken();
+  ngOnInit() {
+    //If we have a token, we're logged in, so fetch user data
+    this.authorizationService.isLoggedIn.subscribe(val => {
+      if (val) {
+        this.getPlaylists()
       }
-
-      this.playLists = await this.getPlaylists();
-    }
+    });
   }
 
-  async getPlaylists() {
-    const response = await fetch("https://api.spotify.com/v1/me/playlists ", {
-      method: 'GET',
-      headers: { 'Authorization': 'Bearer ' + this.authorizationService.currentToken.access_token },
-    });
-
-    return await response.json();
+  getPlaylists(): void {
+    this.libraryService.getPlaylists()
+      .subscribe(playlists =>
+        this.playlists = playlists);
   }
 }

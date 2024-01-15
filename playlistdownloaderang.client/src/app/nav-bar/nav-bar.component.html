@@ -7,12 +7,12 @@
   <a href="javascript:void(0);" class="icon" (click)="responsive=true">&#9776;</a>
   <div class="overlay-content">
     <a class="active" id="home" routerLink="" href="#home"><img class="home-icon" src="../assets/home.png" /><span>Home</span></a>
-    <ng-template [ngIf]="!authorizationService.hasToken()" id="logged-in-template">
+    <ng-template [ngIf]="!(authorizationService.isLoggedIn | async)" id="logged-in-template">
       <button id="login-button" (click)="loginWithSpotifyClick()"> Log in with Spotify </button>
     </ng-template>
-    <ng-template [ngIf]="authorizationService.hasToken()" id="logged-in-template">
-      <button id="refresh-token-button" (click)="refreshTokenClick()">Refresh Token</button>
-      <button id="logout-button" (click)="logoutClick()">Log out</button>
+    <ng-template [ngIf]="authorizationService.isLoggedIn | async" id="logged-in-template">
+      <button id="refresh-token-button" (click)="this.authorizationService.refreshToken()">Refresh Token</button>
+      <button id="logout-button" (click)="this.authorizationService.logout()">Log out</button>
     </ng-template>
   </div>
 </div>  
