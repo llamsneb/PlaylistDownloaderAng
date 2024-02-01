@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AuthorizationService } from '../app/authorization.service';
-import { AuthToken } from './models/auth-token.model';
+//import { AuthToken } from './models/auth-token.model';
 import { RouterOutlet } from '@angular/router';
 import { LibraryComponent } from './library/library.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';

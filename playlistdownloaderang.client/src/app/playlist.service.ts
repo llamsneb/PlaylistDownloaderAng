@@ -13,7 +13,7 @@ export class PlaylistService {
   ) { }
 
   getPlaylist(playlist_id:string): Observable<Playlist> {
-    const profileUrl = `https://api.spotify.com/v1/me/playlists/${playlist_id}`;  // URL to web api  
+    const profileUrl = `https://api.spotify.com/v1/playlists/${playlist_id}`;  // URL to web api  
     return this.http.get<Playlist>(profileUrl)
       .pipe(
         catchError((error) => {

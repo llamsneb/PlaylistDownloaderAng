@@ -2,12 +2,17 @@
   <div class="title-container">
     <a id="library"><img class="library-icon" src="../assets/library.png"><span>Your Library</span></a>
   </div>
-  <div>
+  <div class="pl-list">
     <ul>
       <li *ngFor="let playlist of playlists.items" routerLinkActive="active">
         <div class="playlists-nav" routerLink="/playlist/{{playlist.id}}">
           <div><img src="{{playlist.images[2].url}}"/></div>
-          <div><span>{{ playlist.name }}</span></div>
+          <div>
+            <div><span>{{ playlist.name }}</span></div>
+            <div>
+                <img class="download-icon" title="Download to Excel" (click)="downloadPlaylist(playlist.id)" src="../assets/download.png" />
+            </div>
+          </div>
         </div>
       </li>
     </ul>

@@ -36,6 +36,10 @@ $black: black;
   vertical-align: middle;
 }
 
+.download-icon:hover{
+    cursor: pointer;
+}
+
 .playlists-nav{
     display: flex;
     padding: 5px;
@@ -74,10 +78,32 @@ $black: black;
 
 
 @include tablet {
+
+  #library-nav {
+    /*height: 436px;
+    overflow: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;*/
+  }
+  /*#library-nav::-webkit-scrollbar {
+    display: none;
+  }*/
+
+  .pl-list {
+    height: 396px;
+    overflow: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .pl-list::-webkit-scrollbar {
+    display: none;
+  }
+
   #library span {
-      font-size: 16px;
-      font-weight: bold;
-      margin-left: 12px;
-      display: inline-block;    
+    font-size: 16px;
+    font-weight: bold;
+    margin-left: 12px;
+    display: inline-block;
   }
 }
