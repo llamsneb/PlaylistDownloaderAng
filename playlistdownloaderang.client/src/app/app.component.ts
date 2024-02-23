@@ -1,17 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AuthorizationService } from '../app/authorization.service';
-//import { AuthToken } from './models/auth-token.model';
 import { RouterOutlet } from '@angular/router';
 import { LibraryComponent } from './library/library.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
-
-//interface WeatherForecast {
-//  date: string;
-//  temperatureC: number;
-//  temperatureF: number;
-//  summary: string;
-//}
 
 @Component({
     selector: 'app-root',
@@ -21,8 +13,6 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
     imports: [NavBarComponent, LibraryComponent, RouterOutlet]
 })
 export class AppComponent implements OnInit {
-  //public forecasts: WeatherForecast[] = [];
-
   constructor(
     private http: HttpClient,
     public authorizationService: AuthorizationService
@@ -56,21 +46,7 @@ export class AppComponent implements OnInit {
         window.history.replaceState({}, document.title, updatedUrl);
       });
     }
-
-    //console.log('test');
-    //this.getForecasts();
   }
-
-  //getForecasts() {
-  //  this.http.get<WeatherForecast[]>('/weatherforecast').subscribe(
-  //    (result) => {
-  //      this.forecasts = result;
-  //    },
-  //    (error) => {
-  //      console.error(error);
-  //    }
-  //  );
-  //}
 
   title = 'playlistdownloaderang.client';
 }

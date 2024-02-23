@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpRequest, HttpInterceptorFn, HttpEvent, HttpHandler, HttpHandlerFn } from '@angular/common/http';
-import { Observable, of, from, throwError } from 'rxjs';
-import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import { HttpClient, HttpRequest, HttpHandlerFn } from '@angular/common/http';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, switchMap, tap } from 'rxjs/operators';
 
 import { BehaviorSubject } from 'rxjs';
 import { AuthToken } from './models/auth-token.model';
@@ -15,7 +15,7 @@ export class AuthorizationService {
 
   authorizationEndpoint: string = "https://accounts.spotify.com/authorize";
   tokenEndpoint: string = "https://accounts.spotify.com/api/token";
-  scope: string = 'user-read-private user-read-email';
+  scope: string = 'user-read-private user-read-email user-top-read';
 
 
 
@@ -37,15 +37,6 @@ export class AuthorizationService {
       localStorage.setItem('expires', expiry.toString());
     }
   };
-
-  //private httpOptions = {
-  //  headers: new HttpHeaders(
-  //    {
-  //      //'Authorization': 'Bearer ' + this.currentToken.access_token,
-  //      'Content-Type': 'application/x-www-form-urlencoded'
-  //    }
-  //  )
-  //};
 
   isLoggedIn = new BehaviorSubject<boolean>(!!this.currentToken.access_token);
   hasValidToken = new BehaviorSubject<boolean>(!!this.currentToken.access_token);

@@ -3,12 +3,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { CurrentUsersProfile } from './models/current-users-profile.model';
+import { FeaturedPlaylists } from './models/featured-playlists.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProfileService {
   private profileUrl = 'https://api.spotify.com/v1/me';  // URL to web api   
+  private featPlaylistsUrl = 'https://api.spotify.com/v1/browse/featured-playlists';  // URL to web api   
 
   constructor(
     private http: HttpClient
@@ -28,6 +30,14 @@ export class ProfileService {
       .pipe(
         //tap(_ => this.log('fetched profile')),
         catchError(this.handleError<CurrentUsersProfile>('getUserData'))
+      );
+  }
+
+  getFeatPlaylists(): Observable<FeaturedPlaylists> {
+    return this.http.get<FeaturedPlaylists>(this.featPlaylistsUrl)
+      .pipe(
+        //tap(_ => this.log('fetched profile')),
+        catchError(this.handleError<FeaturedPlaylists>('getFeatPlaylists'))
       );
   }
 

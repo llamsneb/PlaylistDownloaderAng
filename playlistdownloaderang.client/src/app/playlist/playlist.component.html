@@ -1,4 +1,4 @@
-<div *ngIf="!!(playlist$ | async)">
+<div class="bg-spacer" *ngIf="!!(playlist$ | async)">
   <iframe style="border-radius:12px"
           [attr.src]="frameUrl|url"
           width="100%"
@@ -7,29 +7,5 @@
           allowfullscreen=""
           allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
           loading="lazy">
-  </iframe>
-  <!--<div class="playlist-header">
-    <div><img [attr.src]="playlist.images[1].url" /></div>
-    <div class="title-container">
-      <div>Playlist</div>
-      <h1>{{ playlist.name }}</h1>
-      <div>
-        <span>{{playlist.owner.display_name}}</span><span>&nbsp;&#8226;&nbsp;{{playlist.tracks.total}} songs&#44;&nbsp; </span>-->
-        <!--<span>{{duration|date:"h 'hours' mm 'minutes' ss 'seconds'":"UTC"}}</span>-->
-        <!--<span>{{totaltime}}</span>
-      </div>
-    </div>
-  </div>
-  <div class="playlist-body">
-    <ul>
-      <li *ngFor="let item of playlist.tracks.items">
-        <div>
-          <div><img [attr.src]="item.track.album.images[2].url" /></div>
-          <div><span>{{ item.track.name }}</span></div>
-        </div>
-      </li>
-    </ul>
-  </div>-->
-
-
+  </iframe> 
 </div>

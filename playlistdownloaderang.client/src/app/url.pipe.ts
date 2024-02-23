@@ -11,13 +11,6 @@ export class UrlPipe implements PipeTransform {
 
   // receives uri and verifies security
   transform(value: string): any {
-    //const url = 'https://open.spotify.com/embed/';
     return this.domSanitizer.bypassSecurityTrustResourceUrl(value);
   }
-
-
-  //transform(value: unknown, ...args: unknown[]): unknown {
-  //  return null;
-  //}
-
 }

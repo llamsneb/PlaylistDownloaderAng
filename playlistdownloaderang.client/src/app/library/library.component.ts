@@ -7,17 +7,17 @@ import { Observable, throwError, pipe, map } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { RouterLinkActive, RouterLink } from '@angular/router';
-import { NgFor } from '@angular/common';
-import { Playlist } from '../models/playlist.model';
+import { NgClass, NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-library',
   templateUrl: './library.component.html',
   styleUrl: './library.component.scss',
   standalone: true,
-  imports: [NgFor, RouterLinkActive, RouterLink]
+  imports: [NgClass, NgFor, RouterLinkActive, RouterLink]
 })
-export class LibraryComponent {
+export class LibraryComponent implements OnInit {
+  pl_collapse: boolean = false; 
   playlists: any = {};
   constructor(
     public authorizationService: AuthorizationService,
@@ -41,41 +41,34 @@ export class LibraryComponent {
         this.playlists = playlists);
   }
 
-  downloadPlaylist(id: string): void {
-    this.playlistService.getPlaylist(id).subscribe(pl => {
-      const httpOptions = {
-        headers: new HttpHeaders({
-          //'Authorization': 'Bearer ' + this.currentToken.access_token,
-          'Content-Type': 'application/json',            
-        }),
-        'responseType': 'blob' as 'json'
-      };
-      const params = new URLSearchParams({
-        id: id
-      });
+  //downloadPlaylist(id: string): void {
+  //  this.playlistService.getPlaylist(id).subscribe(pl => {
+  //    const httpOptions = {
+  //      headers: new HttpHeaders({
+  //        'Content-Type': 'application/json',            
+  //      }),
+  //      'responseType': 'blob' as 'json'
+  //    };      
 
-      //this.http.get('/export').pipe(
-      //  catchError((error) => {
-      //    return throwError(() => error);
-      //  })
-      //).subscribe();
+  //    //this.http.get('/export').pipe(
+  //    //  catchError((error) => {
+  //    //    return throwError(() => error);
+  //    //  })
+  //    //).subscribe();
 
-      this.http.post<Blob>('/export', pl, httpOptions)
-        .pipe(
-          map(res => {
-            //const blob = new Blob([res], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-
-            var downloadURL = URL.createObjectURL(res);
-            var link = document.createElement('a');
-            link.href = downloadURL;
-            link.download = pl.name + "_playlist.xlsx";
-            link.click();
-          }),
-          catchError((error) => {
-            return throwError(() => error);
-          })
-      )
-      .subscribe();
-    })
-  }
+  //    this.http.post<Blob>('/export', pl, httpOptions)
+  //      .pipe(
+  //        map(res => {
+  //          var downloadURL = URL.createObjectURL(res);
+  //          var link = document.createElement('a');
+  //          link.href = downloadURL;
+  //          link.download = pl.name + "_playlist.xlsx";
+  //          link.click();
+  //        }),
+  //        catchError((error) => {
+  //          return throwError(() => error);
+  //        })
+  //      ).subscribe();
+  //  })
+  //}
 }

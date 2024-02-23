@@ -25,11 +25,8 @@ namespace PlaylistDownloaderAng.Server.Controllers
             // create a new memory stream;
             MemoryStream ms = new MemoryStream();
 
-            //string fileName = playlist["name"] + "_playlist.xlsx";
-
             // Create a spreadsheet document.  
-            SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.
-                Create(ms, SpreadsheetDocumentType.Workbook);
+            SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.Create(ms, SpreadsheetDocumentType.Workbook);
 
             // Add a WorkbookPart to the document.  
             WorkbookPart workbookpart = spreadsheetDocument.AddWorkbookPart();
@@ -139,13 +136,7 @@ namespace PlaylistDownloaderAng.Server.Controllers
             ms.Seek(0, SeekOrigin.Begin);
 
             // return the file stream
-            return new FileStreamResult(ms, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");          
-
-            //var stream = System.IO.File.Open(fileName, FileMode.Open);
-            //return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
-
-            //return Ok(true);
-
+            return new FileStreamResult(ms, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");  
         }
 
         Stylesheet CreateStyleSheet()
@@ -310,8 +301,7 @@ namespace PlaylistDownloaderAng.Server.Controllers
             {
                 Rgb = new HexBinaryValue()
                 {
-                    Value =
-                              System.Drawing.ColorTranslator.ToHtml(
+                    Value = System.Drawing.ColorTranslator.ToHtml(
                               System.Drawing.Color.FromArgb(
                                   fillColor.A,
                                   fillColor.R,
@@ -388,55 +378,6 @@ namespace PlaylistDownloaderAng.Server.Controllers
             }
 
             return columns;
-        }
-
-        static public void InsertHyperLink(ref SpreadsheetDocument spreadsheetDocument, ref WorksheetPart worksheetPart, ref Worksheet worksheet, string uri, string cellAddress)
-        {
-            // Open the document for editing.  
-            //using (SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.Open(fileName, true))
-            //{
-                // Get the first sheet in the workbook.  
-                //Sheet sheet1 = spreadsheetDocument.WorkbookPart.Workbook.Descendants<Sheet>().First();
-                //WorksheetPart worksheetPart = (WorksheetPart)spreadsheetDocument.WorkbookPart.GetPartById(sheet1.Id);
-
-                // Create a hyperlink relationship.  
-                HyperlinkRelationship hyperlinkRelationship = worksheetPart.AddHyperlinkRelationship(new System.Uri(uri, System.UriKind.Absolute), true);
-
-                // Add a new shared string table part.  
-                SharedStringTablePart sharedStringTablePart1;
-                if (spreadsheetDocument.WorkbookPart.GetPartsOfType<SharedStringTablePart>().Count() > 0)
-                {
-                    sharedStringTablePart1 = spreadsheetDocument.WorkbookPart.GetPartsOfType<SharedStringTablePart>().First();
-                }
-                else
-                {
-                    sharedStringTablePart1 = spreadsheetDocument.WorkbookPart.AddNewPart<SharedStringTablePart>();
-                }
-
-            // Add a new shared string table.  
-            SharedStringTable sharedStringTable1 = new SharedStringTable();
-                    //{
-                    //    Count = (UInt32Value)1U,
-                    //    UniqueCount =
-                    //    (UInt32Value)1U
-                    //};
-                sharedStringTablePart1.SharedStringTable = sharedStringTable1;
-
-                // Create the hyperlink object.  
-                Hyperlinks hyperlinks1 = new Hyperlinks();
-                Hyperlink hyperlink1 =
-                    new Hyperlink()
-                    {
-                        Reference = cellAddress,
-                        Id = hyperlinkRelationship.Id
-                    };
-
-                // Append the hyperlink to the collection.   
-                hyperlinks1.Append(hyperlink1);
-
-                // Append the hyperlink to the worksheet.  
-                worksheet.Append(hyperlinks1);
-            }
-        //}
+        }        
     }
 }

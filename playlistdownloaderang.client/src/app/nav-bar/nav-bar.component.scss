@@ -21,115 +21,90 @@ $black: black;
 }
 
 // SCSS Styles
+
+
+#nav {
+  display: flex;
+  height: auto;
+  background-color: $black;
+  justify-content: space-between;
+  padding: .6rem 0;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
 button {
   background-color: white;
   color: $black;
   border: none;
-  padding: 16px;
+  padding: 1rem 2rem;
   text-align: center;
   text-decoration: none;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: bold;
-  border-radius: 30px;
+  border-radius: 2rem;
+}
+
+svg {
+  height: 1.6rem;
 }
 
 .logo {
-  height: 25px;
-  padding-top: 5px;
-  padding-left: 5px;
+  fill: white;
+}
+#spotify-link a {  
+    gap: .3rem;
 }
 
-#nav {
-  /*display:flex;*/
-  width: 100%;
-  height: auto;
-  overflow: auto;
-  font-size: 22px;
-  /*position: fixed;*/
-  background-color: $black;
-  
+.nav-link {
+  padding: 1rem;
 
-  a.spotify-link {
-    float: left;
-    display: block;
-    padding: 14px;
-  }
-
-  .home-icon {
-    display: none;
-  }
-
-  .icon {
-    float: right;
-    display: block;
-    color: white;
-    padding: 16px;
-    text-align: center;
+  a {
+    display: flex;
+    gap: 1rem;
     text-decoration: none;
+    color: white;
   }
+}
 
-  .closebtn, .overlay-content {
-    display: none;
-  }
+.home-icon,
+.home-active-icon,
+.closebtn,
+.overlay-content {
+  display: none;
+}
 
-  @include tablet {    
-    width: auto;
-    position: relative;
-    overflow: auto;
-    background-color: $dark-gray;
+.menu-icon {
+  padding: 1rem;
+  font-size: 1.5rem;
 
-    .overlay-content {
-      display: block;
-    }
-
-    a#home, a.spotify-link {
-      display: block;
-      float: none;
-      padding: 4px 0px;
-    }
-
-    button {
-      display: block;
-      float: none;
-      margin: 6px;
-    }
-
-    #home {
-      color: white;
-      text-decoration: none;
-    }
-
-    .home-icon {
-      display: inline-block;
-      height: 35px;
-      vertical-align: middle;
-    }
-
-    #home span {
-      font-size: 16px;
-      font-weight: bold;
-      margin-left: 12px;
-    }
-
-    .icon {
-      display: none;
-    }
+  a {
+    color: #a7a7a7;
+    text-decoration: none;
   }
 }
 
 #nav.responsive {
   height: 100%;
   width: 100%;
+  margin: 0;
   position: fixed;
   z-index: 1;
   top: 0;
   left: 0;
   background-color: rgb(0,0,0);
   /*background-color: rgba(0,0,0, 0.9);*/
-  overflow-x: hidden;
+  overflow: hidden;
   transition: 0.5s;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 
-  a.spotify-link, a.icon {
+  .nav-link {
+    padding: 0;
+  }
+
+  #spotify-link,
+  .menu-icon {
     display: none;
   }
 
@@ -155,10 +130,11 @@ button {
     margin-top: 30px;
     display: block;
 
-    a, button {
-      padding: 8px;
+    a,
+    button {
+      padding: .5rem;
       text-decoration: none;
-      font-size: 36px;
+      font-size: 2.2rem;
       color: #818181;
       display: block;
       transition: 0.3s;
@@ -166,8 +142,88 @@ button {
       background-color: transparent;
     }
 
-    a:hover, a:focus, button:hover, button:focus {
+    a:hover,
+    a:focus,
+    button:hover,
+    button:focus {
       color: #f1f1f1;
     }
-  }  
+  }
+}
+
+#nav.responsive::-webkit-scrollbar {
+  display: none;
+}
+
+@include tablet {
+  #nav {
+    width: auto;
+    position: relative;
+    overflow: auto;
+    background-color: $dark-gray;
+    flex-flow: column;
+    justify-content: normal;
+  }
+
+  .overlay-content {
+    display: block;
+  }
+
+  button {
+    display: block;
+    float: none;
+    margin: .6rem 1.4rem;
+  }
+
+  #home {
+    color: #a7a7a7;
+
+    svg {
+      vertical-align: middle;
+    }
+
+    svg.home-active-icon {
+      display: none;
+    }
+
+    svg.home-icon {
+      display: flex;
+    }
+  }
+
+  #home.active {
+    color: white;
+
+    svg.home-icon {
+      display: none;
+    }
+
+    svg.home-active-icon {
+      display: flex;
+    }
+  }
+
+  #home:hover {
+    svg,span {
+      fill: white;
+      color: white;
+    }
+}
+  .menu-icon {
+    display: none;
+  }
+
+  .home-icon {
+    display: none;
+    fill: #a7a7a7;
+  }
+
+  .home-active-icon {
+    display: flex;
+    fill: white;
+  }
+
+  .nav-link {
+    padding: .6rem 1.4rem;
+  }
 }

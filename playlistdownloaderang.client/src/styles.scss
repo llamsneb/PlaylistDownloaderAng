@@ -19,7 +19,6 @@ $light-gray: #b3b3b3;
   }
 }
 
-
 @font-face {
   font-family: 'CircularSp';
   src: url('assets/fonts/CircularSp-Book.woff2') format('woff2');
@@ -60,20 +59,45 @@ body {
   height: 100%;*/
   background-color: black;
   color: white;
-  font-size: 14px;
+  /*font-size: 14px;*/
   font-family: CircularSp,sans-serif,"Helvetica Neue",Helvetica,Arial,"Hiragino Kaku Gothic ProN",Meiryo,"MS GothicHelvetica";
+  font-size: .95rem;
 }
 
-.nav-container {
+.bg-container {
   background-color: $dark-gray;
   color: white;
+  border-radius: .5rem;
+  margin: .3rem 0;
   /*overflow: auto;*/
   /*display: block;*/
+}
 
-  @include tablet {
-    margin: 5px 0;
-    padding: 16px;
-    border-radius: 8px;
+
+
+@include tablet {
+  body {
+    font-size: 1rem;
+  }
+
+  .bg-spacer {
+    padding: 1rem;
     /*display: block;*/
+  }
+
+  .container-height {
+    border-radius: .5rem;
+    min-height: 608px;
+    height: 98vh;
+  }
+
+  .scroll-style {
+    overflow: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .scroll-style::-webkit-scrollbar {
+    display: none;
   }
 }

@@ -1,49 +1,142 @@
-/*body {
-  margin: 1rem;
-  font-family: Arial, Helvetica, sans-serif;
+// SCSS Variables
+$layout_bp_mobile: 360px;
+$layout_bp_tablet: 600px;
+$layout_bp_desktop: 1000px;
+
+$dark-gray: #121212;
+$light-gray: #b3b3b3;
+
+// SCSS Mixins
+@mixin tablet {
+  @media only screen and (min-width: $layout_bp_tablet) {
+    @content;
+  }
 }
 
-tr:nth-child(even) {
-  background-color: #eee;
+@mixin desktop {
+  @media only screen and (min-width: $layout_bp_desktop) {
+    @content;
+  }
 }
 
-td:first-child {
-  font-weight: bold;
-}
+/*
+A simple little SCSS mixin for creating scrim gradients
+Inspired by Andreas Larson - https://github.com/larsenwork
+https://css-tricks.com/easing-linear-gradients/
+*/
 
-td {
-  white-space: nowrap;
-  padding: 10px;
-  margin-right: 1rem;
-}*/
+@mixin scrimGradient($startColor: #4f4f4f, $direction: 'to bottom') {
 
-/*button {
-  margin: 1rem 1rem 0 0;
-  border: 0;
-  border-radius: 20px;
-  padding: 10px 3rem;
-  font-size: 0.8rem;
-  font-family: Arial, Helvetica, sans-serif;
-  text-transform: uppercase;
-  font-weight: bold;
-  background-color: #1ed760;
-  color: black;
-}
+  $scrimCoordinates: ( 0: 1, 19: 0.738, 34: 0.541, 47: 0.382, 56.5: 0.278, 65: 0.194, 73: 0.126, 80.2: 0.075, 86.1: 0.042, 91: 0.021, 95.2: 0.008, 98.2: 0.002, 100: 0 );
 
-  button:hover {
-    background-color: #1fdf64;
+  $hue: hue($startColor);
+  $saturation: saturation($startColor);
+  $lightness: lightness($startColor);
+  $stops: ();
+
+  @each $colorStop, $alphaValue in $scrimCoordinates {
+    $stop: hsla($hue, $saturation, $lightness, $alphaValue) percentage($colorStop/100);
+    $stops: append($stops, $stop, comma);
   }
 
-#logged-in {
-  display: none;
-}*/
-.table-container {
-  /*display: flex;
-  flex-flow: row wrap;*/
-  width: 500px;
-  overflow: auto;
+  background: linear-gradient(unquote($direction), $stops);
 }
 
-.table-container>* {
-  /*flex: 1 1 200px;*/
+.profile-container {
+  display: flex;
+  padding: 2rem 1.5rem;
+  /*background-image: linear-gradient(#4f4f4f 35%, 65%, $dark-gray);*/
+  @include scrimGradient(#4f4f4f);
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+}
+
+.profile-image {
+  border-radius: 8rem;
+  margin-right: 1.5rem;
+  height: 10rem;
+  width: 10rem;
+}
+
+.profile-displayname {
+  font-family: CircularSpTitle-bold;
+  font-size: 3rem;
+}
+
+.profile-label {
+  font-family: CircularSp-Bold;
+  margin-right: 1rem;
+}
+
+#spotify-uri{
+  color: white;
+}
+
+.pl-message{
+    margin: 1rem 2rem;
+}
+
+.fpl-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  gap: .75rem;
+}
+
+.bg-playlist {
+  background-color: #181818;
+  padding: 1rem;
+  border-radius: .5rem;
+  margin: .3rem 0;
+  position: relative;
+}
+
+.bg-playlist:hover {
+  cursor: pointer;
+  background-color: #282828;
+}
+
+.download-icon {
+  position: absolute;
+  right: 1.2rem;
+  top: 1.2rem;
+  width: 1.6rem;
+  height: 1.6rem;
+  background-color: rgba(0,0,0,.7);
+  border: none;
+  border-radius: 50%;
+  fill: #a7a7a7;
+}
+
+.download-icon:hover {
+  cursor: pointer;
+  fill: white;
+}
+
+.pl-img {
+  height: 12rem;
+  width: 12rem;
+}
+
+.wordwrap {
+  width: 12rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@include tablet {
+  .profile-image {
+    height: 15rem;
+    width: 15rem;
+  }
+
+  .profile-displayname {
+    font-size: 6rem;
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { PlaylistService } from '../playlist.service';
 import { Playlist } from '../models/playlist.model';
 import { Observable, throwError } from 'rxjs';
@@ -14,10 +14,8 @@ import { UrlPipe } from '../url.pipe';
     standalone: true
 })
 
-export class PlaylistComponent implements OnChanges {
+export class PlaylistComponent {
   playlist$!: Observable<Playlist>;
-  playlist!: Playlist;
-  totaltime!: string;
   frameUrl!: string;
 
   @Input() set id(id: string) {
@@ -27,26 +25,4 @@ export class PlaylistComponent implements OnChanges {
   constructor(
     public playlistService: PlaylistService
   ) { }
-
-  ngOnChanges() {
-    //this.playlist$.subscribe(pl => {
-    //  this.playlist = pl;
-    //  var duration = this.playlist.tracks.items
-    //    .reduce((total: number, obj: any) => obj.track.duration_ms + total, 0);
-    //  this.totaltime = this.msToTime(duration)
-    //});      
-  }
-
-  //msToTime(duration:number) {
-  //  var milliseconds = Math.floor((duration % 1000) / 100);
-  //  var seconds = Math.floor((duration / 1000) % 60);
-  //  var minutes = Math.floor((duration / (1000 * 60)) % 60);
-  //  var hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
- 
-  //  var hoursAsStr = (hours == 0) ? "" : hours + " hr ";
-  //  var minutesAsStr = (minutes == 0) ? "" : minutes + " min ";
-  //  var secondsAsStr = (seconds == 0) ? "" : seconds + " sec";  
-
-  //  return hoursAsStr + minutesAsStr + secondsAsStr;
-  //}
 }

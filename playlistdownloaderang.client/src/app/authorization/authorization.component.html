@@ -1,71 +1,39 @@
 
 <ng-template [ngIf]="!(authorizationService.isLoggedIn | async)" id="login">
-  <h1>Welcome to the OAuth2 PKCE Example</h1>
-  <!--<button id="login-button" (click)="loginWithSpotifyClick()"> Log in with Spotify </button>-->
+  <div class="bg-spacer">
+    <h1>Welcome to the Spotify Playlist Downloader!</h1>
+    <br />
+    <p>Please login to access your playlists</p>
+  </div>
 </ng-template>
 
-<ng-template
-      [ngIf]="(authorizationService.isLoggedIn | async) && this.authorizationService.isValidToken()"
-      id="logged-in-template">
-  <h1>Logged in as {{userData.display_name}}</h1>
-  <img width="150" [attr.src]="userData.images[0].url" [attr.alt]="userData.display_name" />
-  <div class="table-container">
-    <table>
-      <tr>
-        <td>Display name</td>
-        <td>{{userData.display_name}}</td>
-      </tr>
-      <tr>
-        <td>Id</td>
-        <td>{{userData.id}}</td>
-      </tr>
-      <tr>
-        <td>Email</td>
-        <td>{{userData.email}}</td>
-      </tr>
-      <tr>
-        <td>Spotify URI</td>
-        <td>
-          <a [attr.href]="userData.external_urls.spotify">{{userData.external_urls.spotify}}</a>
-        </td>
-      </tr>
-      <tr>
-        <td>Link </td>
-        <td>
-          <a [attr.href]="userData.href"></a>
-        </td>
-      </tr>
-      <!--<tr>
-        <td>Profile Image</td>
-        <td>
-          <a [attr.href]="userData.images[0].url">{{userData.images[0].url}}</a>
-        </td>
-      </tr>-->
-      <tr>
-        <td>Country</td>
-        <td>{{userData.country}}</td>
-      </tr>
-    </table>
-  </div>
-  <!--<button mat-fab extended color="primary" id="refresh-token-button" (click)="refreshTokenClick()">Refresh Token</button>
-  <button mat-fab extended color="primary" id="logout-button" (click)="logoutClick()">Log out</button>-->
-</ng-template>
-<ng-template [ngIf]="authorizationService.isLoggedIn | async" id="oauth-template">
-  <h2>oAuth info</h2>
-  <div class="table-container">
-    <table>
-      <tr>
-        <td>Access token</td>
-        <td>{{authorizationService.currentToken.access_token}}</td>
-      </tr>
-      <tr>
-        <td>Refresh token</td>
-        <td>{{authorizationService.currentToken.refresh_token}}</td>
-      </tr>
-      <tr>
-        <td>Expiration at</td>
-        <td>{{authorizationService.currentToken.expires}}</td>
-      </tr>
-    </table>
-  </div>
+<ng-template [ngIf]="(authorizationService.isLoggedIn | async) && this.authorizationService.isValidToken()"
+             id="logged-in-template">
+  <!--<div class="container-height">-->
+    <div class="profile-container">
+      <img class="profile-image" [attr.src]="userData.images[1].url" [attr.alt]="userData.display_name" />
+      <div class="profile-info">
+        <div>Profile</div>
+        <h1 class="profile-displayname">{{userData.display_name}}</h1>
+        <div><span class="profile-label">Id:</span>{{userData.id}}</div>
+        <div><span class="profile-label">Email:</span>{{userData.email}}  </div>
+        <div><span class="profile-label">Followers:</span>{{userData.followers.total}}  </div>
+        <div><span class="profile-label">Country:</span>{{userData.country}}</div>
+        <div>
+          <a id="spotify-uri" [attr.href]="userData.external_urls.spotify">{{userData.external_urls.spotify}}</a>
+        </div>
+      </div>
+    </div>
+    <h2 class="pl-message">{{featPlaylists.message}}</h2>
+    <div class="fpl-container">
+      <div class="bg-playlist" *ngFor="let item of featPlaylists.playlists.items" routerLink="/playlist/{{item.id}}">        
+          <img class="pl-img" [attr.src]="item.images[0].url" [attr.alt]="item.name" />
+          <svg class="download-icon" (click)="playlistService.downloadPlaylist(item.id)" data-encore-id="icon" role="img" aria-hidden="true" viewBox="0 0 16 16">
+            <title>Download to Excel</title>
+            <path d="M4.995 8.745a.75.75 0 0 1 1.06 0L7.25 9.939V4a.75.75 0 0 1 1.5 0v5.94l1.195-1.195a.75.75 0 1 1 1.06 1.06L8 12.811l-.528-.528a.945.945 0 0 1-.005-.005L4.995 9.805a.75.75 0 0 1 0-1.06z"></path>
+            <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13z"></path>
+          </svg>
+          <div class="wordwrap">{{item.name}}</div>
+      </div>
+    </div>
 </ng-template>
