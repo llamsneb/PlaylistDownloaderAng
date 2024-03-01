@@ -1,6 +1,9 @@
 {
   "name": "playlistdownloaderang.client",
   "version": "0.0.0",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {
     "ng": "ng",
     "start": "run-script-os",
@@ -41,8 +44,5 @@
     "karma-jasmine-html-reporter": "~2.1.0",
     "schematics-scss-migrate": "^2.3.17",
     "typescript": "~5.2.2"
-  },
-  "engines": {
-    "node": ">=20.0.0"
   }
 }
