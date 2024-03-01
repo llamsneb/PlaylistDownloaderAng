@@ -16,7 +16,7 @@ namespace PlaylistDownloaderAng.Server
             builder.Services.AddSwaggerGen();
             //builder.Services.AddSwaggerGen(c =>
             //{
-            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "PlaylistDownloaderAng.Server", Version = "v1" });
             //});
 
             var app = builder.Build();
@@ -25,11 +25,12 @@ namespace PlaylistDownloaderAng.Server
             app.UseStaticFiles();
 
             // Configure the HTTP request pipeline.
-            app.UseSwagger();
-            //if (app.Environment.IsDevelopment())
-            //{
-            app.UseSwaggerUI();
-            //}
+            //app.UseSwagger();
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
             //else
             //{
             //app.UseSwaggerUI(options =>
