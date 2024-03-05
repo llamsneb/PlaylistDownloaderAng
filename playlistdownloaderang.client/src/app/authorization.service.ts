@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpHandlerFn } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
-
 import { BehaviorSubject } from 'rxjs';
+import { environment } from '../environments/environment';
 import { AuthToken } from './models/auth-token.model';
 
 @Injectable({
@@ -11,7 +11,6 @@ import { AuthToken } from './models/auth-token.model';
 })
 export class AuthorizationService {
   clientId: string = '22371a408fff416ead0fdfe8019d0a1a'; // your clientId
-  redirectUrl: string = 'https://localhost:4200';        // your redirect URL - must be localhost URL and/or HTTPS
 
   authorizationEndpoint: string = "https://accounts.spotify.com/authorize";
   tokenEndpoint: string = "https://accounts.spotify.com/api/token";
@@ -66,7 +65,7 @@ export class AuthorizationService {
       scope: this.scope,
       code_challenge_method: 'S256',
       code_challenge: code_challenge_base64,
-      redirect_uri: this.redirectUrl,
+      redirect_uri: environment.redirectUrl,
     };
 
     authUrl.search = new URLSearchParams(params).toString();
@@ -92,7 +91,7 @@ export class AuthorizationService {
       client_id: this.clientId,
       grant_type: 'authorization_code',
       code: code,
-      redirect_uri: this.redirectUrl,
+      redirect_uri: environment.redirectUrl,
       code_verifier: code_verifier
     });
 
@@ -160,7 +159,7 @@ export class AuthorizationService {
   logout() {
     localStorage.clear();
     this.isLoggedIn.next(!!this.currentToken.access_token);
-    window.location.href = this.redirectUrl;
+    window.location.href = environment.redirectUrl;
   }  
 
   /**
