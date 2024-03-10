@@ -83,7 +83,8 @@
           },
           "configurations": {
             "development": {
-              "buildTarget": "playlistdownloaderang.client:build:development"
+              "buildTarget": "playlistdownloaderang.client:build:development",
+              "proxyConfig": "src/proxy.conf.js"
             },
             "production": {
               "buildTarget": "playlistdownloaderang.client:build:production"

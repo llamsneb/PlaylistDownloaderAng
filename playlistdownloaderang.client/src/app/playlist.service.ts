@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError, pipe, map } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Playlist } from './models/playlist.model';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +38,7 @@ export class PlaylistService {
       //  })
       //).subscribe();
 
-      this.http.post<Blob>('/export', pl, httpOptions)
+      this.http.post<Blob>(environment.exportApi, pl, httpOptions)
         .pipe(
           map(res => {
             var downloadURL = URL.createObjectURL(res);
