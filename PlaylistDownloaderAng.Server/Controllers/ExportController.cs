@@ -13,12 +13,6 @@ namespace PlaylistDownloaderAng.Server.Controllers
     [Route("[controller]")]
     public class ExportController : ControllerBase
     {
-        //[HttpGet]
-        //public string Get()
-        //{
-        //    return "Get Worked";
-        //}
-
         [HttpPost]
         public IActionResult Post([FromBody]JsonObject playlist)
         {

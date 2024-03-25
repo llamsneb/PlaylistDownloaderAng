@@ -22,24 +22,7 @@ namespace PlaylistDownloaderAng.Function
             _logger = loggerFactory.CreateLogger<Export>();
         }
 
-        //[Function("Export")]
-        //public HttpResponseData Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req)
-        //{
-        //    _logger.LogInformation("C# HTTP trigger function processed a request.");
-
-        //    var response = req.CreateResponse(HttpStatusCode.OK);
-        //    response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
-
-        //    response.WriteString("Welcome to Azure Functions!");
-
-        //    return response;
-        //}
-
-
-
-        //[HttpPost]
         [Function("Export")]
-        //public IActionResult Post([FromBody] JsonObject playlist)
         public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req)
 
         {

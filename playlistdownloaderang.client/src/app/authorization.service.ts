@@ -38,7 +38,6 @@ export class AuthorizationService {
   };
 
   isLoggedIn = new BehaviorSubject<boolean>(!!this.currentToken.access_token);
-  hasValidToken = new BehaviorSubject<boolean>(!!this.currentToken.access_token);
   isRefreshing = false;
   constructor(private http: HttpClient) { }
 
@@ -71,12 +70,6 @@ export class AuthorizationService {
     authUrl.search = new URLSearchParams(params).toString();
     window.location.href = authUrl.toString(); // Redirect the user to the authorization server for login
   }
-
-  //hasToken() {
-  //  return this.currentToken.access_token //&& this.currentToken.access_token != 'undefined'
-  //    ? true
-  //    : false;    
-  //}
 
   isValidToken() {
     const now = new Date();
@@ -148,9 +141,9 @@ export class AuthorizationService {
         //tap(_ => this.log('fetched profile')),
         catchError((error) => {
           //Refresh Token Issue.
-          //if (error.status == 401) {
-            //this.logout();
-          //}
+          if (error.status == 401) {
+            this.logout();
+          }
           return throwError(() => error);
         })       
       );

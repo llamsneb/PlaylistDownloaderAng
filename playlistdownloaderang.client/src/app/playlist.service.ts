@@ -32,12 +32,6 @@ export class PlaylistService {
         'responseType': 'blob' as 'json'
       };
 
-      //this.http.get('/export').pipe(
-      //  catchError((error) => {
-      //    return throwError(() => error);
-      //  })
-      //).subscribe();
-
       this.http.post<Blob>(environment.exportApi, pl, httpOptions)
         .pipe(
           map(res => {

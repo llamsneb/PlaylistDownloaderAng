@@ -16,15 +16,6 @@ export class ProfileService {
     private http: HttpClient
   ) { }
 
-  /** GET heroes from the server */
-  //getHeroes(): Observable<Hero[]> {
-  //  return this.http.get<Hero[]>(this.heroesUrl)
-  //    .pipe(
-  //      tap(_ => this.log('fetched heroes')),
-  //      catchError(this.handleError<Hero[]>('getHeroes', []))
-  //    );
-  //}
-
   getUserData(): Observable<CurrentUsersProfile> {
     return this.http.get<CurrentUsersProfile>(this.profileUrl)
       .pipe(
@@ -61,9 +52,4 @@ export class ProfileService {
       return of(result as T);
     };
   }
-
-  /** Log a HeroService message with the MessageService */
-  //private log(message: string) {
-  //  this.messageService.add(`HeroService: ${message}`);
-  //}
 }

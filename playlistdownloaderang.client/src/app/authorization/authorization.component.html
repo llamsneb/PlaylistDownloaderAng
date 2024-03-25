@@ -9,7 +9,6 @@
 
 <ng-template [ngIf]="(authorizationService.isLoggedIn | async) && this.authorizationService.isValidToken()"
              id="logged-in-template">
-  <!--<div class="container-height">-->
     <div class="profile-container">
       <img class="profile-image" [attr.src]="userData.images[1].url" [attr.alt]="userData.display_name" />
       <div class="profile-info">

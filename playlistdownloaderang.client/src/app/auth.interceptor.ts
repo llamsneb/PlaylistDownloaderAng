@@ -9,7 +9,6 @@ import { AuthorizationService } from './authorization.service';
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authorizationService = inject(AuthorizationService);  
 
-  //if (authorizationService.isLoggedIn.value) {
   let modifiedReq: HttpRequest<any>;
   if (req.url == authorizationService.authorizationEndpoint || req.url == authorizationService.tokenEndpoint) {
     modifiedReq = req.clone({
@@ -35,8 +34,4 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
       }
     })
   );
-  //}
-  //else {    
-  //  return next(req);
-  //}
 };

@@ -1,9 +1,4 @@
 @PlaylistDownloaderAng.Server_HostAddress = http://localhost:5161
 POST {{PlaylistDownloaderAng.Server_HostAddress}}/export/
 Accept: application/json
-# GET {{PlaylistDownloaderAng.Server_HostAddress}}/weatherforecast/
-# Accept: application/json
-
-
-
 ###
