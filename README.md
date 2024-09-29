@@ -20,3 +20,21 @@
    <a href="https://github.com/llamsneb/RMAS">
     <li>Github</li></a>
   </ul>
+
+<h3>Home</h3>
+
+![SpotifyToExcel - Screenshot Home](https://github.com/user-attachments/assets/cdf1f3c8-cf0a-4c15-8584-e9c7e0359ef1)
+
+<h3>Playlist with Music Player</h3>
+
+![SpotifyToExcel - Screenshot Playlist](https://github.com/user-attachments/assets/e0fa8b0a-4301-4847-a575-101e41644cbe)
+
+<h3>Responsive Mobile</h3>
+<img src="https://github.com/user-attachments/assets/2f540265-cc29-4586-9d1c-bda3d919f83f" width="320">
+
+<h3>Excel</h3>
+
+![SpotifyToExcel - Screenshot Excel](https://github.com/user-attachments/assets/91f380ac-620b-4c7f-8293-2456f9399d50)
+
+
+
